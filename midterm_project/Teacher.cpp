@@ -5,9 +5,10 @@
 //  Created by Farhana Rahman on 10/22/22.
 //
 
-#include "teacher.hpp"
+#include "teacher.h"
 #include <array>
-
+#include <string>
+using namespace std;
 Teacher::Teacher() {
 
     username = "Dr.Giambrone";

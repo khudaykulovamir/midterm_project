@@ -1,6 +1,6 @@
 
 #include <iostream>
-#include "teacher.hpp"
+#include "teacher.h"
 
 using namespace std;
 
