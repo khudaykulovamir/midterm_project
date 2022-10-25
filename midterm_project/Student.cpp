@@ -31,6 +31,7 @@ void Student::printCopies() {
 	}
 }
 void Student::insertCopy(const Book b1) {
+	//Book temp = b1;
 	Book temp(b1.getISBN(), b1.getTitle(), b1.getAuthor(), b1.getCategory(), b1.getId(), b1.getReader(), b1.getStart(), b1.getexpDate()); //unless there is some book copy function
 	if (copy_list.size() > 5) {
 		cout << "The maximum number of copies a student can have is 5!" << endl;
@@ -38,12 +39,12 @@ void Student::insertCopy(const Book b1) {
 	}
 	else {
 		copy_list.pop_back();
-		copy_list.insert(copy_list.begin, temp);
+		copy_list.insert(copy_list.begin(), temp);
 	}
 }
-void Student::deleteCopy(const Book b1) {
+void Student::deleteCopy(Book b1) {
 	for (int i = 0; i < 5; i++) {
-		if (b1.getID() == copy_list[i].getID()) {//id must be unique to work
+		if (b1.getId() == copy_list[i].getId()) {//id must be unique to work
 			Book empty;
 			empty.swap(copy_list[i]);
 		}
