@@ -5,6 +5,5 @@ using namespace std;
 int main() {
 	Book b = Book();
 	b.readData("book.txt");
-	cout << "hello";
 	b.print();
 }

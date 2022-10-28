@@ -5,22 +5,23 @@ using namespace std;
 
 class Book {
 private:
-	int ISBN, ID, startBorrow, expDate;
+	string ISBN, ID;
+	long int startBorrow, expDate;
 	string Author,Title, Category, Reader;
 public:
 	
 	Book();
-	Book(int isbn, string title, string author, string category, int id, string reader, int start, int exp);
-	int getISBN();
+	Book( string isbn, string title, string author, string category, string id, string reader, long int start,long int exp);
+	string getISBN();
 	string getTitle();
 	string getAuthor();
 	string getCategory();
-	int getId();
+	string getId();
 	string getReader();
 	void setReader(string reader);
-	int getStart();
+	long int getStart();
 	void setStart(int start);
-	int getexpDate();
+	long int getexpDate();
 	void setexpDate(int ex);
 	void readData(string const& in);
 	void print();
