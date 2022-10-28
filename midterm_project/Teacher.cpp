@@ -54,17 +54,34 @@ void Teacher::set_copies(int max_copies) {
 }
 
 
-void Teacher::display_array() {
-    for (string i : copy_borrow) {
-        cout << i << endl;
-    }
+//Any book they check out goes into this array
+void Teacher::input_into_vector(string book) {
+
+    copy_borrow.push_back(book);
 
 }
 
-//Any book they check out goes into this array
-void Teacher::input_into_array(string book) {
+void Teacher::remove_from_vector(string book) {
 
-    copy_borrow[array_length] = book;
-    array_length++;
+    //sends it to the beginning of the vector
+    vector<string>::iterator it = copy_borrow.begin();
+
+    while (it != copy_borrow.end()) {
+
+        if ((*it).compare(book) == 0) {
+            copy_borrow.erase(it);
+        }
+        else {
+            it++;
+        }
+
+    }
+}
+
+void Teacher::display() {
+
+    for (string i : copy_borrow) {
+        cout << i << endl;
+    }
 
 }
