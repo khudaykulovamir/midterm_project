@@ -3,16 +3,60 @@
 #include "Book.h"
 #include <string>
 #include <vector>
+vector <Book> Copy_list;
 Student::Student() {
 	username = "";
 	password = "";
-	vector <Book> copy_list[5];
+	
 	//Book arr[5];
 }
 Student::Student(string username, string password, vector <Book> copy_list) {
 	this->username = username;
 	this->password = password;
-	this->copy_list = copy_list;
+	Copy_list = copy_list;
+	num_of_books = 0;
+}
+void Student::printListOfBooks() {
+	for (int i = 0; i < Copy_list.size(); i++)
+	{
+		cout << Copy_list[i].getISBN() << " " << Copy_list[i].getTitle() << " " << Copy_list[i].getAuthor() << " " << Copy_list[i].getCategory() << " " << Copy_list[i].getId() << " " << Copy_list[i].getReader() << endl;
+	}
+}
+bool Student::borrowBook(string isbn) {
+	
+	for (int i = 0; i < list_of_books.size() - 1; i++)
+	{
+		if (isbn == list_of_books[i].getISBN())
+		{
+			if (list_of_books[i].getReader()=="")
+			{
+				Copy_list.push_back(list_of_books[i]);
+				list_of_books[i].setReader(username);
+				
+				return 1;
+			}
+			return 0;
+		}
+	}
+
+	return 0;
+
+}bool Student::returnBook(string isbn) {
+	for (int i = 0; i < list_of_books.size() - 1; i++)
+	{
+		if (isbn == list_of_books[i].getISBN()) {
+			list_of_books[i].setReader("");
+		}
+	}
+	for (int j = 0; j < Copy_list.size(); j++)
+	{
+		if (isbn == Copy_list[j].getISBN()) {
+			Copy_list.erase(Copy_list.begin()+j);
+			return 1;
+		}
+	}
+	return 0;
+
 }
 string Student::getUser() {
 	return username;
