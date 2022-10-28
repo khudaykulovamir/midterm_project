@@ -26,7 +26,7 @@ string Student::getPass() {
 void Student::setPass(const string password) {
 	this->password = password;
 }
-void Student::printCopies() {
+/*void Student::printCopies() {
 	for (int i = 0; i < 5; i++) {
 		cout << copy_list[0].print() << endl; //some book print member function
 	}
@@ -63,4 +63,4 @@ void Student::deleteCopy(Book b1) {
 			cout << "Copy \"" << empty.getTitle() << "\" wasn't borrowed!" << endl;
 		}
 	}
-}
+}*/
