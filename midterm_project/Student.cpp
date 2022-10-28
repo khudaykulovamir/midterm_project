@@ -2,7 +2,6 @@
 #include "Student.h"
 #include "Book.h"
 #include <string>
-#include <string>
 using namespace std;
 Student::Student() {
 	username = "";
