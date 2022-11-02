@@ -6,7 +6,6 @@ using namespace std;
 class Student {
 private:
 	string username, password;
-	Book copy_list[];
 public:
 	Student();
 	Student(string username, string password, Book copy_list[]);
@@ -14,9 +13,9 @@ public:
 	void setUser(const string username);
 	string getPass();
 	void setPass(const string password);
-	void printCopies();
-	void insertCopy(const Book b1);
-	void deleteCopy(const Book b1);
+	void printCopies(); 
+	bool borrowBook(string isbn);
+	bool returnBook(string isbn);
 	ostream& operator <<(ostream& output, const Book* book);
 	istream& operator >>(istream& input, Book* book);
 	void UI();

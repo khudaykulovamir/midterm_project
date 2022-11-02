@@ -2,16 +2,19 @@
 #include "Student.h"
 #include "Book.h"
 #include <string>
+#include <vector>
+vector <Book> Copy_list;
 using namespace std;
 Student::Student() {
 	username = "";
 	password = "";
 	Book copy_list[5];
-}[
-	Student::Student(string username, string password, Book copy_list[]) {
+}
+
+	Student::Student(string username, string password, vector <Book> copy_list) {
 	this->username = username;
 	this->password = password;
-	this->copy_list = copy_list;
+	Copy_list = copy_list;
 }
 string Student::getUser() {
 	return username;
@@ -26,44 +29,53 @@ void Student::setPass(const string password) {
 	this->password = password;
 }
 void Student::printCopies() {
-	for (int i = 0; i < 5; i++) {
-		cout << "Title: "copy_list[i].getTitle() "\t Author: " << copy_list[i].getAuthor() << endl;
+	for (int i = 0; i < Copy_list.size(); i++)
+	{
+		cout << Copy_list[i].getISBN() << " " << Copy_list[i].getTitle() << " " << Copy_list[i].getAuthor() << " " << Copy_list[i].getCategory() << " " << Copy_list[i].getId() << " " << Copy_list[i].getReader() << endl;
 	}
 }
-void Student::insertCopy(const Book b1) {
-	int i = 0;
-	bool bookedList = true;
-	Book temp(b1.getISBN(), b1.getTitle(), b1.getAuthor(), b1.getCategory(), b1.getId(), b1.getReader(), b1.getStart(), b1.getexpDate()); 
-	for (int i = -1; i < 5; ++i) {
-		if (copy_list[i].getId() == "") {
-			bookedList = false;
-			break;
-		}
-	}
-	if (bookedList) {
-		cout << "The maximum number of copies a student can have is 5!" << endl;
-		return;
-	}
-	else {
-		copy_list[i] = temp;
+bool Student::insertCopy(string isbn) {
+	for (int i = 0; i < list_of_books.size() - 1; i++)
+	{
+		if (isbn == list_of_books[i].getISBN())
+		{
+			if (list_of_books[i].getReader() == "")
+			{
+				Copy_list.push_back(list_of_books[i]);
+				list_of_books[i].setReader(username);
 
-		copy_list.pop_back();
-		copy_list.insert(copy_list.begin(), temp);
-	}
-}
-void Student::deleteCopy(Book b1) {
-	Book empty;
-	for (int i = -1; i < 5; ++i) {
-		if (copy_list[i].getId() == b1.getId()) {
-			copy_list[i] = empty;
-			break;
-		}
-		else {
-			cout << "Copy \"" << empty.getTitle() << "\" wasn't borrowed!" << endl;
+				return 1;
+			}
+			return 0;
 		}
 	}
+
+	return 0;
+
 }
-ostream& operator << (ostream& output, const Book* book) {
+bool Student::deleteCopy(string isbn) {
+	for (int i = 0; i < list_of_books.size() - 1; i++)
+	{
+		if (isbn == list_of_books[i].getISBN()) {
+			list_of_books[i].setReader("");
+		}
+	}
+	for (int j = 0; j < Copy_list.size(); j++)
+	{
+		if (isbn == Copy_list[j].getISBN()) {
+			Copy_list.erase(Copy_list.begin() + j);
+			return 1;
+		}
+	}
+	return 0;
+}
+void Student::printCopies() {
+	for (int i = 0; i < 5; i++) {
+		cout << "Title: "<<copy_list[i].getTitle()<< " Author: " << copy_list[i].getAuthor() << endl;
+		
+	}
+}
+/*ostream& operator << (ostream& output, const Book* book) {
 	string studentname = "NONE";
 	if (!book)
 		return output;
@@ -79,10 +91,10 @@ ostream& operator << (ostream& output, const Book* book) {
 }
 istream& operator >> (istream& input, Book* book) {
 	int id, borrow, expire;
-	string isbn, student name;
+	string isbn, student, name;
 	bool available;
 	input >> id >> isbn >> studentname >> avaialble >> borrow >> expire;//double check
-}
+}*/
 void UI() {
 	char cmd='q';
 	cout << "--------------------------------------------------------------------"<< endl;
@@ -169,4 +181,4 @@ void searchBook() {
 			break;
 	}
 }
-*/
+
