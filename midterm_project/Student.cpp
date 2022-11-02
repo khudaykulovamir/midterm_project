@@ -75,12 +75,12 @@ void Student::printCopies() {
 		
 	}
 }
-/*ostream& operator << (ostream& output, const Book* book) {
+ostream& Student::operator<< (ostream& output,  Book* book) {
 	string studentname = "NONE";
 	if (!book)
 		return output;
-	if (book->getReader())
-		studentname = book->getReader()->getUser();
+	if (book->getReader() == "")
+		studentname = book->getReader();
 	output << "\tID : \ t \ t" << book->getId() << endl;
 	output << "\tTitle : \ t \ t" << book->getTitle() << endl;
 	output << "\tAuthor : \ t \ t" << book->getAuthor() << endl;
@@ -89,12 +89,13 @@ void Student::printCopies() {
 
 	
 }
-istream& operator >> (istream& input, Book* book) {
-	int id, borrow, expire;
-	string isbn, student, name;
+istream& Student::operator>> (istream& input, Book* book) {
+	string id;
+	int borrow, expire;
+	string isbn, studentname;
 	bool available;
-	input >> id >> isbn >> studentname >> avaialble >> borrow >> expire;//double check
-}*/
+	input >> id >> isbn >> studentname >> available >> borrow >> expire;//double check
+}
 void UI() {
 	char cmd='q';
 	cout << "--------------------------------------------------------------------"<< endl;

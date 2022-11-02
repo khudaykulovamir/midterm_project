@@ -2,6 +2,7 @@
 #include <string>
 #include "Book.h"
 #include <vector>
+
 using namespace std;
 class Student {
 private:
@@ -16,8 +17,9 @@ public:
 	void printCopies(); 
 	bool borrowBook(string isbn);
 	bool returnBook(string isbn);
-	ostream& operator <<(ostream& output, const Book* book);
-	istream& operator >>(istream& input, Book* book);
+	ostream& operator<< (ostream& output,const Book& book);
+	istream operator>> (istream& input, Book* book);
+	
 	void UI();
 	void searchBook();
 	void printListOfBooks();
