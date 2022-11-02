@@ -8,7 +8,7 @@ private:
 	string username, password;
 public:
 	Student();
-	Student(string username, string password, Book copy_list[]);
+	Student(string username, string password, vector <Book> copy_list);
 	string getUser();
 	void setUser(const string username);
 	string getPass();

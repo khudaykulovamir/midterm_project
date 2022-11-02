@@ -11,7 +11,7 @@ Student::Student() {
 	Book copy_list[5];
 }
 
-	Student::Student(string username, string password, vector <Book> copy_list) {
+Student::Student(string username, string password, vector <Book> copy_list) {
 	this->username = username;
 	this->password = password;
 	Copy_list = copy_list;
@@ -34,7 +34,7 @@ void Student::printCopies() {
 		cout << Copy_list[i].getISBN() << " " << Copy_list[i].getTitle() << " " << Copy_list[i].getAuthor() << " " << Copy_list[i].getCategory() << " " << Copy_list[i].getId() << " " << Copy_list[i].getReader() << endl;
 	}
 }
-bool Student::insertCopy(string isbn) {
+bool Student::borrowBook(string isbn) {
 	for (int i = 0; i < list_of_books.size() - 1; i++)
 	{
 		if (isbn == list_of_books[i].getISBN())
@@ -53,7 +53,7 @@ bool Student::insertCopy(string isbn) {
 	return 0;
 
 }
-bool Student::deleteCopy(string isbn) {
+bool Student::returnBook(string isbn) {
 	for (int i = 0; i < list_of_books.size() - 1; i++)
 	{
 		if (isbn == list_of_books[i].getISBN()) {
@@ -71,7 +71,7 @@ bool Student::deleteCopy(string isbn) {
 }
 void Student::printCopies() {
 	for (int i = 0; i < 5; i++) {
-		cout << "Title: "<<copy_list[i].getTitle()<< " Author: " << copy_list[i].getAuthor() << endl;
+		cout << "Title: "<<Copy_list[i].getTitle()<< " Author: " << Copy_list[i].getAuthor() << endl;
 		
 	}
 }
