@@ -3,7 +3,11 @@
 #include "Book.h"
 #include <string>
 #include <vector>
+#include <fstream>
+#include "Teacher.h"
 vector <Book> Copy_list;
+vector <Student> students;
+vector <Teacher> teachers;
 using namespace std;
 Student::Student() {
 	username = "";
@@ -11,10 +15,10 @@ Student::Student() {
 	Book copy_list[5];
 }
 
-Student::Student(string username, string password, vector <Book> copy_list) {
+Student::Student(string username, string password) {
 	this->username = username;
 	this->password = password;
-	Copy_list = copy_list;
+	
 }
 string Student::getUser() {
 	return username;
@@ -53,6 +57,53 @@ bool Student::borrowBook(string isbn) {
 	return 0;
 
 }
+bool Student::checkForStudent(string u, string p) {
+	for (int i = 0; i < students.size(); i++)
+	{
+		if (students[i].getUser()==u&&students[i].getPass()==p)
+		{
+			return 1;
+		}
+	}
+	return 0;
+}
+bool Student::readFile(string in) {
+	string file = in;
+	fstream bookFile(file);
+	if (bookFile.fail())
+	{
+
+		exit(1);
+
+	}
+	int i;
+	string username, password;
+	
+	while (!bookFile.eof())
+	{
+		bookFile >> i;
+		bookFile >> username;
+		bookFile >> password;
+		//cout << i <<" "<< username << " " << password<<endl;
+		if (i == 0)
+		{
+			Student s = Student(username, password);
+			students.push_back(s);
+		}
+		else
+		{
+			Teacher t = Teacher(username, password);
+			teachers.push_back(t);
+		}
+		
+	}
+}
+void Student::printStudents() {
+	for (int i = 0; i < students.size() ; i++)
+	{
+		cout << students[i].getUser() << " " << students[i].getPass()<<endl;
+	}
+}
 bool Student::returnBook(string isbn) {
 	for (int i = 0; i < list_of_books.size() - 1; i++)
 	{
@@ -69,13 +120,8 @@ bool Student::returnBook(string isbn) {
 	}
 	return 0;
 }
-void Student::printCopies() {
-	for (int i = 0; i < 5; i++) {
-		cout << "Title: "<<Copy_list[i].getTitle()<< " Author: " << Copy_list[i].getAuthor() << endl;
-		
-	}
-}
-ostream& Student::operator<< (ostream& output,  Book* book) {
+
+/*ostream& Student::operator<< (ostream& output, Book* book) {
 	string studentname = "NONE";
 	if (!book)
 		return output;
@@ -95,7 +141,7 @@ istream& Student::operator>> (istream& input, Book* book) {
 	string isbn, studentname;
 	bool available;
 	input >> id >> isbn >> studentname >> available >> borrow >> expire;//double check
-}
+}*/
 void UI() {
 	char cmd='q';
 	cout << "--------------------------------------------------------------------"<< endl;
@@ -134,7 +180,7 @@ void UI() {
 	cout << "Logging Out..." << endl;
 	exit(1);
 }
-void searchBook() {
+/*void searchBook() {
 	char cmd = 'q';
 	cout << "\n \n";
 	cout << "Search Book By:" << "\n" << "\n";
@@ -183,3 +229,4 @@ void searchBook() {
 	}
 }
 
+*/

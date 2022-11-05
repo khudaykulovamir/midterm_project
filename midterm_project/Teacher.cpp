@@ -16,13 +16,28 @@ Teacher::Teacher() {
     max_copies = 0;
 }
 
-Teacher::Teacher(string name, string password, int max_copies) {
+Teacher::Teacher(string name, string password) {
 
     username = name;
     this->password = password;      //not refering to parameter password and refer to class password
-    this->max_copies = max_copies;
-}
 
+}
+void Teacher::printTeachers() {
+    for (int i = 0; i < teachers.size() - 1; i++)
+    {
+        cout << teachers[i].get_username() << " " << teachers[i].get_password() << endl;
+    }
+}
+bool Teacher::checkForTeacher(string u, string p) {
+    for (int i = 0; i < teachers.size(); i++)
+    {
+        if (teachers[i].get_username() == u && teachers[i].get_password() == p)
+        {
+            return 1;
+        }
+    }
+    return 0;
+}
 string Teacher::get_username() {
 
     return username;
@@ -55,7 +70,7 @@ void Teacher::set_copies(int max_copies) {
 
 
 //Any book they check out goes into this array
-void Teacher::input_into_vector(string book) {
+/*void Teacher::input_into_vector(string book) {
 
     copy_borrow.push_back(book);
 
@@ -84,4 +99,4 @@ void Teacher::display() {
         cout << i << endl;
     }
 
-}
+}*/

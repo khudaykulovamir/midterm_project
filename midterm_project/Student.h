@@ -9,7 +9,7 @@ private:
 	string username, password;
 public:
 	Student();
-	Student(string username, string password, vector <Book> copy_list);
+	Student(string username, string password);
 	string getUser();
 	void setUser(const string username);
 	string getPass();
@@ -17,10 +17,13 @@ public:
 	void printCopies(); 
 	bool borrowBook(string isbn);
 	bool returnBook(string isbn);
-	ostream& operator<< (ostream& output,const Book& book);
-	istream operator>> (istream& input, Book* book);
-	
+//	ostream& operator<< (ostream& output,const Book& book);
+	//istream operator>> (istream& input, Book* book);
+	bool readFile(string fileName);
 	void UI();
 	void searchBook();
+	void printStudents();
 	void printListOfBooks();
+	bool checkForStudent(string u, string p);
 };
+extern vector <Student> students;
