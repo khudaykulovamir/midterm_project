@@ -3,20 +3,14 @@
 //  Midterm_project_teacher_class
 //
 //  Created by Farhana Rahman on 10/22/22.
-//
-
 #include <iostream>
 #include "Student.h"
 #include "Book.h"
-#include <
 #include "teacher.h"
 #include <fstream>
 #include <array>
 #include <string>
-vector <Book> Copy_list;
-vector <Student> students;
-vector <Teacher> teachers;
-vector <Book> list_of_books{};
+vector <Book> copy_list_for_teacher;
 using namespace std;
 Teacher::Teacher() {
 
@@ -76,27 +70,101 @@ void Teacher::set_copies(int max_copies) {
 
     this->max_copies = max_copies;
 }
-
 bool Teacher::borrow_book(string isbn) {
-    for (int i = 0; i < list_of_books.size() - 1; i++)
-    {
-        if (isbn == list_of_books[i].getISBN())
-        {
-            if (list_of_books[i].getReader() == "")
+	for (int i = 0; i < list_of_books.size() - 1; i++)
+	{
+		if (isbn == list_of_books[i].getISBN())
+		{
+			if (list_of_books[i].getReader() == "")
 			{
-				Copy_list.push_back(list_of_books[i]);
+				copy_list_for_teacher.push_back(list_of_books[i]);
 				list_of_books[i].setReader(username);
-                
-                return 1;
-            }
-            return 0;
-        }
-    }
-    
-    return 0;   
-    
-}
 
+				return 1;
+			}
+			return 0;
+		}
+	}
+
+	return 0;
+
+}
+void Teacher::searchBook() {
+	char cmd = 'q';
+	cout << "\n \n";
+	cout << "Search Book By:" << "\n" << "\n";
+	cout << "\t 1 -- ID" << endl;
+	cout << "\t 2 -- Title" << endl;
+	cout << "\t 3 -- Author" << endl;
+	cout << "\t 4 -- ISBN" << endl;
+	cout << "\t 5 -- Category" << endl;
+	cin >> cmd;
+	string entry;
+	bool found = 0;
+	int i;
+	switch (cmd) {
+	case '1':
+		cin >> entry;
+		for (i = 0; i < (list_of_books.size() - 1); i++)
+		{
+			if (entry == list_of_books[i].getId())
+			{
+				cout << "Book found!" << endl;
+				cout << list_of_books[i].getISBN() << " " << list_of_books[i].getTitle() << " " << list_of_books[i].getAuthor() << " " << list_of_books[i].getCategory() << " " << list_of_books[i].getId() << endl;
+
+			}
+		}
+		break;
+	case '2':
+		cin >> entry;
+		for (i = 0; i < (list_of_books.size() - 1); i++)
+		{
+			if (entry == list_of_books[i].getTitle())
+			{
+				cout << "Book found!" << endl;
+				cout << list_of_books[i].getISBN() << " " << list_of_books[i].getTitle() << " " << list_of_books[i].getAuthor() << " " << list_of_books[i].getCategory() << " " << list_of_books[i].getId() << endl;
+
+			}
+		}
+		break;
+	case '3':
+		cin >> entry;
+		for (i = 0; i < (list_of_books.size() - 1); i++)
+		{
+			if (entry == list_of_books[i].getAuthor())
+			{
+				cout << "Book found!" << endl;
+				cout << list_of_books[i].getISBN() << " " << list_of_books[i].getTitle() << " " << list_of_books[i].getAuthor() << " " << list_of_books[i].getCategory() << " " << list_of_books[i].getId() << endl;
+
+			}
+		}
+		break;
+	case'4':
+		cin >> entry;
+		for (i = 0; i < (list_of_books.size() - 1); i++)
+		{
+			if (entry == list_of_books[i].getISBN())
+			{
+				cout << "Book found!" << endl;
+				cout << list_of_books[i].getISBN() << " " << list_of_books[i].getTitle() << " " << list_of_books[i].getAuthor() << " " << list_of_books[i].getCategory() << " " << list_of_books[i].getId() << endl;
+
+			}
+		}
+		break;
+	case'5':
+		cin >> entry;
+		for (i = 0; i < (list_of_books.size() - 1); i++)
+		{
+			if (entry == list_of_books[i].getCategory())
+			{
+				cout << "Book found!" << endl;
+				cout << list_of_books[i].getISBN() << " " << list_of_books[i].getTitle() << " " << list_of_books[i].getAuthor() << " " << list_of_books[i].getCategory() << " " << list_of_books[i].getId() << endl;
+
+			}
+		}
+		break;
+	}
+}
 bool Teacher::return_book(string isbn) {
 	for (int i = 0; i < list_of_books.size() - 1; i++)
 	{
@@ -104,82 +172,32 @@ bool Teacher::return_book(string isbn) {
 			list_of_books[i].setReader("");
 		}
 	}
-	for (int j = 0; j < Copy_list.size(); j++)
+	for (int j = 0; j < copy_list_for_teacher.size(); j++)
 	{
-		if (isbn == Copy_list[j].getISBN()) {
-			Copy_list.erase(Copy_list.begin() + j);
+		if (isbn == copy_list_for_teacher[j].getISBN()) {
+			copy_list_for_teacher.erase(copy_list_for_teacher.begin() + j);
 			return 1;
 		}
 	}
 	return 0;
 }
-
 void Teacher::printCopies() {
-	for (int i = 0; i < Copy_list.size(); i++)
+	for (int i = 0; i < copy_list_for_teacher.size(); i++)
 	{
-		cout << Copy_list[i].getISBN() << " " << Copy_list[i].getTitle() << " " << Copy_list[i].getAuthor() << " " << Copy_list[i].getCategory() << " " << Copy_list[i].getId() << " " << Copy_list[i].getReader() << endl;
+		cout << copy_list_for_teacher[i].getISBN() << " " << copy_list_for_teacher[i].getTitle() << " " << copy_list_for_teacher[i].getAuthor() << " " << copy_list_for_teacher[i].getCategory() << " " << copy_list_for_teacher[i].getId() << " " << copy_list_for_teacher[i].getReader() << endl;
 	}
 }
 
-void UI() {
-	char cmd='q';
-	cout << "--------------------------------------------------------------------"<< endl;
-	cout << "-						Welcome to My Library						-"<< endl;
-	cout << "--------------------------------------------------------------------" << endl;
-	cout << "\n";
-	cout << "Welcome back, Teacher";
-	cout << "\n";
-	while (cmd != '0') {
-		cout << "Please choose:" << endl;
-		cout << "\t 1 -- Search Book" << endl;
-		cout << "\t 2 -- Borrow Book" << endl;
-		cout << "\t 3 -- Return Book" << endl;
-		cout << "\t 4 -- Renew Book" << endl;
-        cout << "\t 5 -- Request a new book copy << endl;
-        cout << "\t 6 -- Delete an existing copy << endl;
-		/*add more options here*/
-		cout << "\t 0 -- Log Out" << endl;
-		cin >> cmd;
-		switch (cmd) {
-		case '1':
-			/*search book func*/
-			break;
-		case '2':
-			borrow_book();
-			break;
-		case '3':
-			returnBook();
-			break;
-		case '4':
-			/*renew book*/
-			break;
-        case '5':   
-            /*Request book*/  
-		request_book(); 	
-            break;
-        case '6':  
-		
-		 /*Delete book*/ 
-		string Id_num;
-		cout << "Enter ID number: " << endl;
-		cin >> Id_num;	
-				
-		if (delete_copy(Id_num) == false){
-			cout << "Book not found!" << endl;
-			exit(1);
-		}
-				   
-            break;
-		default:
-			cout << "Invalid Command. Try Again!" << endl;
-			continue;
-		}
-	}
-	cout << "Logging Out..." << endl;
-	exit(1);
+/*
+
+
 }
 
-bool Teacher::request_book(string isbn, string b_title, string b_author, string b_category){
+
+
+
+
+/*bool Teacher::request_book(string isbn, string b_title, string b_author, string b_category) {
 	
 	//asks user for ISBN
 	cout << "Please enter ISBN: " << endl;

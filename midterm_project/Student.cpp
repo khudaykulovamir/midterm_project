@@ -47,7 +47,7 @@ bool Student::borrowBook(string isbn) {
 			{
 				Copy_list.push_back(list_of_books[i]);
 				list_of_books[i].setReader(username);
-
+				
 				return 1;
 			}
 			return 0;
@@ -180,7 +180,7 @@ void UI() {
 	cout << "Logging Out..." << endl;
 	exit(1);
 }
-/*void searchBook() {
+void Student::searchBook() {
 	char cmd = 'q';
 	cout << "\n \n";
 	cout << "Search Book By:" << "\n" << "\n";
@@ -190,43 +190,70 @@ void UI() {
 	cout << "\t 4 -- ISBN" << endl;
 	cout << "\t 5 -- Category" << endl;
 	cin >> cmd;
+	string entry;
+	bool found=0;
+	int i;
 	switch (cmd) {
 		case '1':
-			vector <Book> copy = 
-			int lo = 0, hi = v.size() - 1;
-			int mid;
-			// This below check covers all cases , so need to check
-			// for mid=lo-(hi-lo)/2
-			while (hi - lo > 1) {
-				int mid = (hi + lo) / 2;
-				if (v[mid] < To_Find) {
-					lo = mid + 1;
+			cin >> entry;
+			for ( i = 0; i < (list_of_books.size()-1); i++)
+			{
+				if (entry == list_of_books[i].getId())
+				{
+					cout << "Book found!"<<endl;
+					cout << list_of_books[i].getISBN() << " " << list_of_books[i].getTitle() << " " << list_of_books[i].getAuthor() << " " << list_of_books[i].getCategory() << " " << list_of_books[i].getId()  << endl;
+
 				}
-				else {
-					hi = mid;
-				}
-			}
-			if (v[lo] == To_Find) {
-				cout << "Found"
-					<< " At Index " << lo << endl;
-			}
-			else if (v[hi] == To_Find) {
-				cout << "Found"
-					<< " At Index " << hi << endl;
-			}
-			else {
-				cout << "Not Found" << endl;
 			}
 			break;
 		case '2':
+			cin >> entry;
+			for (i = 0; i < (list_of_books.size() - 1); i++)
+			{
+				if (entry == list_of_books[i].getTitle())
+				{
+					cout << "Book found!"<<endl;
+					cout << list_of_books[i].getISBN() << " " << list_of_books[i].getTitle() << " " << list_of_books[i].getAuthor() << " " << list_of_books[i].getCategory() << " " << list_of_books[i].getId() << endl;
+
+				}
+			}
 			break;
 		case '3':
+			cin >> entry;
+			for (i = 0; i < (list_of_books.size() - 1); i++)
+			{
+				if (entry == list_of_books[i].getAuthor())
+				{
+					cout << "Book found!"<<endl;
+					cout << list_of_books[i].getISBN() << " " << list_of_books[i].getTitle() << " " << list_of_books[i].getAuthor() << " " << list_of_books[i].getCategory() << " " << list_of_books[i].getId() << endl;
+
+				}
+			}
 			break;
 		case'4':
+			cin >> entry;
+			for (i = 0; i < (list_of_books.size() - 1); i++)
+			{
+				if (entry == list_of_books[i].getISBN())
+				{
+					cout << "Book found!"<<endl;
+					cout << list_of_books[i].getISBN() << " " << list_of_books[i].getTitle() << " " << list_of_books[i].getAuthor() << " " << list_of_books[i].getCategory() << " " << list_of_books[i].getId() << endl;
+
+				}
+			}
 			break;
 		case'5':
+			cin >> entry;
+			for (i = 0; i < (list_of_books.size() - 1); i++)
+			{
+				if (entry == list_of_books[i].getCategory())
+				{
+					cout << "Book found!"<<endl;
+					cout << list_of_books[i].getISBN() << " " << list_of_books[i].getTitle() << " " << list_of_books[i].getAuthor() << " " << list_of_books[i].getCategory() << " " << list_of_books[i].getId() << endl;
+
+				}
+			}
 			break;
 	}
 }
 
-*/

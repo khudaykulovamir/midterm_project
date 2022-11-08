@@ -6,7 +6,12 @@ using namespace std;
 #include <string>
 #include <ctime>
 #include "Teacher.h"
+
 int main() {
+	Book B = Book();
+	B.readData("book.txt");
+	B.clear();
+	B.readData("book.txt");
 	clock_t time_req;
 	bool successLogin=0;
 	time_req = clock();
@@ -21,6 +26,7 @@ int main() {
 	cin >> password;
 	time_req = clock() - time_req;
 	cout << (float)time_req / CLOCKS_PER_SEC;*/
+	
 	while (successLogin==0)
 	{
 		cout << "Enter username: ";
@@ -31,16 +37,147 @@ int main() {
 		{
 			cout << "Welcome Student!"<<endl;
 			successLogin = 1;
+			char cmd = 'q';
+			Student s1 = Student(username, password);
+			while (cmd!='0')
+			{
+				
+				cout << endl;
+				cout << "--------------------------------------------------------------------" << endl;
+				cout << "-						Welcome to My Library						-" << endl;
+				cout << "--------------------------------------------------------------------" << endl;
+				cout << "\n";
+				cout << "Welcome back, Student";
+				cout << "\n";
+					cout << "Please choose:" << endl;
+					cout << "\t 1 -- Search Book" << endl;
+					cout << "\t 2 -- Borrow Book" << endl;
+					cout << "\t 3 -- Return Book" << endl;
+					cout << "\t 4 -- Renew Book" << endl;
+					cout << "\t 5 -- Print My List Of Books" << endl;
+					/*add more options here*/
+					cout << "\t 0 -- Log Out" << endl;
+					cin >> cmd;
+					string isbn;
+					bool b;
+					switch (cmd) {
+					case '1':
+						s1.searchBook();
+						break;
+					case '2':
+						
+						cout << endl << "Enter isbn of book: ";
+						cin >> isbn;
+						 b=s1.borrowBook(isbn);
+						if (b)
+						{
+							cout << "Succesfully borrowed book!";
+						}
+						else {
+							cout << "Failed to borrow!";
+						}
+						break;
+					case '3':
+						cout << endl << "Enter isbn of book: ";
+						cin >> isbn;
+						b =s1.returnBook(isbn);
+						if (b)
+						{
+							cout << "Succesfully returned book!";
+						}
+						else {
+							cout << "Failed to return!";
+						}
+						break;
+					case '4':
+						/*renew book*/
+						break;
+					case '5':
+						s1.printCopies();
+						break;
+					
+					}
+				
+				
+				
+			}
+			successLogin = 0;
+			cout << endl << "Logged out!" << endl;
 		}
 		if (t.checkForTeacher(username, password) == 1)
 		{
 			cout << "Welcome Teacher!"<<endl;
 			successLogin = 1;
+			char cmd = 'q';
+			Teacher t1 = Teacher(username, password);
+			while (cmd != '0')
+			{
+
+				cout << endl;
+				cout << "--------------------------------------------------------------------" << endl;
+				cout << "-						Welcome to My Library						-" << endl;
+				cout << "--------------------------------------------------------------------" << endl;
+				cout << "\n";
+				cout << "Welcome back, Teacher";
+				cout << "\n";
+				cout << "Please choose:" << endl;
+				cout << "\t 1 -- Search Book" << endl;
+				cout << "\t 2 -- Borrow Book" << endl;
+				cout << "\t 3 -- Return Book" << endl;
+				cout << "\t 4 -- Renew Book" << endl;
+				cout << "\t 5 -- Print My List Of Books" << endl;
+				cout << "\t 6 -- Request Copy" << endl;
+				cout << "\t 6 -- Delete Copy" << endl;
+				/*add more options here*/
+				cout << "\t 0 -- Log Out" << endl;
+				cin >> cmd;
+				string isbn;
+				bool b;
+				switch (cmd) {
+				case '1':
+					t1.searchBook();
+					break;
+				case '2':
+
+					cout << endl << "Enter isbn of book: ";
+					cin >> isbn;
+					b = t1.borrow_book(isbn);
+					if (b)
+					{
+						cout << "Succesfully borrowed book!";
+					}
+					else {
+						cout << "Failed to borrow!";
+					}
+					break;
+				case '3':
+					cout << endl << "Enter isbn of book: ";
+					cin >> isbn;
+					b = t1.return_book(isbn);
+					if (b)
+					{
+						cout << "Succesfully returned book!";
+					}
+					else {
+						cout << "Failed to return!";
+					}
+					break;
+				case '4':
+					/*renew book*/
+					break;
+				case '5':
+					t1.printCopies();
+					break;
+
+				}
+
+
+
+			}
+			successLogin = 0;
+			cout << endl << "Logged out!" << endl;
 		}
-		if (successLogin==0)
-		{
-			cout << "Login or Password is incorrect!" << endl;
-		}
+		
 		
 	}
 }

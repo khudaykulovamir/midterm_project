@@ -33,15 +33,16 @@ public:
     bool borrow_book(string isbn);
     bool return_book(string isbn);
     void UI();
-    void searchBook;
+   // void searchBook;
     bool request_book(string isbn, string b_title, string b_author, string b_category);
     bool delete_copy(string ID_num);
-    bool printCopies();
+    void printCopies();
 
-
+    void searchBook();
 
 
 
 
 };
 extern vector <Teacher> teachers;
+extern vector <Book> copy_list_for_teacher;
