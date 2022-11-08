@@ -16,6 +16,7 @@
 vector <Book> Copy_list;
 vector <Student> students;
 vector <Teacher> teachers;
+vector <Book> list_of_books{};
 using namespace std;
 Teacher::Teacher() {
 
@@ -128,7 +129,7 @@ void UI() {
 		cout << "\t 3 -- Return Book" << endl;
 		cout << "\t 4 -- Renew Book" << endl;
         cout << "\t 5 -- Request a new book copy << endl;
-        cout << "\t 6 -- Delete an existing copu << endl;
+        cout << "\t 6 -- Delete an existing copy << endl;
 		/*add more options here*/
 		cout << "\t 0 -- Log Out" << endl;
 		cin >> cmd;
@@ -137,19 +138,30 @@ void UI() {
 			/*search book func*/
 			break;
 		case '2':
-			/*borrow book func*/
+			borrow_book();
 			break;
 		case '3':
-			/*return book func*/
+			returnBook();
 			break;
 		case '4':
 			/*renew book*/
 			break;
         case '5':   
-            /*Request book*/    
+            /*Request book*/  
+		request_book(); 	
             break;
-        case '6':   
-            /*Request book*/    
+        case '6':  
+		
+		 /*Delete book*/ 
+		string Id_num;
+		cout << "Enter ID number: " << endl;
+		cin >> Id_num;	
+				
+		if (delete_copy(Id_num) == false){
+			cout << "Book not found!" << endl;
+			exit(1);
+		}
+				   
             break;
 		default:
 			cout << "Invalid Command. Try Again!" << endl;
@@ -158,6 +170,72 @@ void UI() {
 	}
 	cout << "Logging Out..." << endl;
 	exit(1);
+}
+
+bool Teacher::request_book(string isbn, string b_title, string b_author, string b_category){
+	
+	//asks user for ISBN
+	cout << "Please enter ISBN: " << endl;
+	cin >> isbn;
+	
+	//asks user for book title
+	cout << "Please enter book title: " << endl;
+	cin >> b_title;
+	
+	//asks user for book author
+	cout << "Please enter book author: " << endl;
+	cin >> b_author;
+	
+	//asks user for book category
+	cout << "Please enter category: " << endl;
+	cin >> b_category;
+	
+	//generates a random number for ID
+	//There is a way to set a range but idk how at the moment
+	int random = rand();
+	
+	//pushes the object into a list of objects through vectors 
+	//Putting the information into the vectors 
+	list_of_books.push_back(Book(isbn,b_title,b_author,b_category, random)); 
+	return true;
+}
+
+bool Teacher::delete_copy(string Id_num){
+	
+	
+	vector<Book>::iterator it = list_of_books.begin();
+	
+	//goes through the list of books to find the book ID 
+	//if the ID is found, continue the rest of the process of deleting
+	int j;
+	for (j=0; j< list_of_books.size(); j++){
+		
+		if(Id_num == list_of_books[j].getID()){
+			return false;			
+		}else{
+			continue;
+		}
+	}
+	
+	//counter starts where the iterator begins 
+	//if the counter equals to j, we found the ID number 
+	int counter = 0;
+	while(it!= list_of_books.end(){
+		
+		if (counter == j){
+			list_of_books.erase(it);
+		}else{
+			counter++;
+			it++;
+		}
+	
+	}
+	
+	return true;
+			
+	}
+
+	
 }
 
 
