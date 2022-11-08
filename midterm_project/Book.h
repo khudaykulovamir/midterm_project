@@ -26,5 +26,6 @@ public:
 	void readData(string const& in);
 	void print();
 	void clear();
+	
 };
 extern vector <Book> list_of_books;
