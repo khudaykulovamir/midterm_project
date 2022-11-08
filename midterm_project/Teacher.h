@@ -30,7 +30,13 @@ public:
     void set_username(string name);
     void set_password(string password);
     void set_copies(int max_copies);
-    void remove_into_array(string book); //deleting a book
+    bool borrow_book(string isbn);
+    bool return_book(string isbn);
+    void UI();
+    void searchBook;
+    bool request_book(string isbn, string b_title, string b_author, string b_category);
+    bool delete_copy(string ID_num);
+    bool printCopies();
 
 
 
