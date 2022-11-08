@@ -76,7 +76,7 @@ void Teacher::set_copies(int max_copies) {
     this->max_copies = max_copies;
 }
 
-bool Student::borrow_book(string isbn) {
+bool Teacher::borrow_book(string isbn) {
     for (int i = 0; i < list_of_books.size() - 1; i++)
     {
         if (isbn == list_of_books[i].getISBN())
