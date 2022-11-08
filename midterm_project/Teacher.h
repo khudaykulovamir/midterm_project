@@ -34,7 +34,7 @@ public:
     bool return_book(string isbn);
     void UI();
    // void searchBook;
-    bool request_book(string isbn, string b_title, string b_author, string b_category);
+    bool request_book();
     bool delete_copy(string ID_num);
     void printCopies();
 

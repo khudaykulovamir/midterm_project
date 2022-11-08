@@ -71,7 +71,7 @@ void Book::readData(string const& in) {
 	string isbn, id;
 	string title, author, category, reader;
 	reader = "";
-	while (!bookFile.eof())
+	do
 	{
 		bookFile >> isbn;
 		bookFile >> title;
@@ -80,10 +80,11 @@ void Book::readData(string const& in) {
 		bookFile >> id;
 		Book b = Book(isbn, title, author, category, id, reader, 0, 0);
 		list_of_books.push_back(b);
-	}
+	} while (!bookFile.eof());
+	list_of_books.pop_back();
 }
 void Book::print() {
-	for (int i = 0; i < list_of_books.size()-1; i++)
+	for (int i = 0; i < list_of_books.size(); i++)
 	{
 		cout << list_of_books[i].getISBN() << " " << list_of_books[i].getTitle() << " " << list_of_books[i].getAuthor() << " " << list_of_books[i].getCategory() << " " << list_of_books[i].getId() << " " << list_of_books[i].getReader() <<endl;
 	}

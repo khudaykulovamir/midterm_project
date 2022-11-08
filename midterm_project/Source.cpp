@@ -112,7 +112,7 @@ int main() {
 			Teacher t1 = Teacher(username, password);
 			while (cmd != '0')
 			{
-
+				string id;
 				cout << endl;
 				cout << "--------------------------------------------------------------------" << endl;
 				cout << "-						Welcome to My Library						-" << endl;
@@ -127,7 +127,7 @@ int main() {
 				cout << "\t 4 -- Renew Book" << endl;
 				cout << "\t 5 -- Print My List Of Books" << endl;
 				cout << "\t 6 -- Request Copy" << endl;
-				cout << "\t 6 -- Delete Copy" << endl;
+				cout << "\t 7 -- Delete Copy" << endl;
 				/*add more options here*/
 				cout << "\t 0 -- Log Out" << endl;
 				cin >> cmd;
@@ -168,7 +168,22 @@ int main() {
 				case '5':
 					t1.printCopies();
 					break;
-
+				case'6':
+					t1.request_book();
+					B.print();
+					break;
+				case '7':
+					cout << "Enter ID: ";
+					cin >> id;
+					b = t1.delete_copy(id);
+					if (b)
+					{
+						cout << "succesfully deleted copy"<<endl;
+					}
+					else {
+						cout << "Failed to delete";
+					}
+					B.print();
 				}
 
 

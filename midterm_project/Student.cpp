@@ -39,7 +39,7 @@ void Student::printCopies() {
 	}
 }
 bool Student::borrowBook(string isbn) {
-	for (int i = 0; i < list_of_books.size() - 1; i++)
+	for (int i = 0; i < list_of_books.size(); i++)
 	{
 		if (isbn == list_of_books[i].getISBN())
 		{
@@ -105,7 +105,7 @@ void Student::printStudents() {
 	}
 }
 bool Student::returnBook(string isbn) {
-	for (int i = 0; i < list_of_books.size() - 1; i++)
+	for (int i = 0; i < list_of_books.size() ; i++)
 	{
 		if (isbn == list_of_books[i].getISBN()) {
 			list_of_books[i].setReader("");
@@ -196,7 +196,7 @@ void Student::searchBook() {
 	switch (cmd) {
 		case '1':
 			cin >> entry;
-			for ( i = 0; i < (list_of_books.size()-1); i++)
+			for ( i = 0; i < (list_of_books.size()); i++)
 			{
 				if (entry == list_of_books[i].getId())
 				{
@@ -208,7 +208,7 @@ void Student::searchBook() {
 			break;
 		case '2':
 			cin >> entry;
-			for (i = 0; i < (list_of_books.size() - 1); i++)
+			for (i = 0; i < (list_of_books.size() ); i++)
 			{
 				if (entry == list_of_books[i].getTitle())
 				{
@@ -220,7 +220,7 @@ void Student::searchBook() {
 			break;
 		case '3':
 			cin >> entry;
-			for (i = 0; i < (list_of_books.size() - 1); i++)
+			for (i = 0; i < (list_of_books.size() ); i++)
 			{
 				if (entry == list_of_books[i].getAuthor())
 				{
@@ -232,7 +232,7 @@ void Student::searchBook() {
 			break;
 		case'4':
 			cin >> entry;
-			for (i = 0; i < (list_of_books.size() - 1); i++)
+			for (i = 0; i < (list_of_books.size() ); i++)
 			{
 				if (entry == list_of_books[i].getISBN())
 				{
@@ -244,7 +244,7 @@ void Student::searchBook() {
 			break;
 		case'5':
 			cin >> entry;
-			for (i = 0; i < (list_of_books.size() - 1); i++)
+			for (i = 0; i < (list_of_books.size() ); i++)
 			{
 				if (entry == list_of_books[i].getCategory())
 				{

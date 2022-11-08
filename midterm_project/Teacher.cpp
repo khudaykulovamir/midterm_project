@@ -71,7 +71,7 @@ void Teacher::set_copies(int max_copies) {
     this->max_copies = max_copies;
 }
 bool Teacher::borrow_book(string isbn) {
-	for (int i = 0; i < list_of_books.size() - 1; i++)
+	for (int i = 0; i < list_of_books.size() ; i++)
 	{
 		if (isbn == list_of_books[i].getISBN())
 		{
@@ -105,7 +105,7 @@ void Teacher::searchBook() {
 	switch (cmd) {
 	case '1':
 		cin >> entry;
-		for (i = 0; i < (list_of_books.size() - 1); i++)
+		for (i = 0; i < (list_of_books.size() ); i++)
 		{
 			if (entry == list_of_books[i].getId())
 			{
@@ -117,7 +117,7 @@ void Teacher::searchBook() {
 		break;
 	case '2':
 		cin >> entry;
-		for (i = 0; i < (list_of_books.size() - 1); i++)
+		for (i = 0; i < (list_of_books.size() ); i++)
 		{
 			if (entry == list_of_books[i].getTitle())
 			{
@@ -129,7 +129,7 @@ void Teacher::searchBook() {
 		break;
 	case '3':
 		cin >> entry;
-		for (i = 0; i < (list_of_books.size() - 1); i++)
+		for (i = 0; i < (list_of_books.size() ); i++)
 		{
 			if (entry == list_of_books[i].getAuthor())
 			{
@@ -141,7 +141,7 @@ void Teacher::searchBook() {
 		break;
 	case'4':
 		cin >> entry;
-		for (i = 0; i < (list_of_books.size() - 1); i++)
+		for (i = 0; i < (list_of_books.size() ); i++)
 		{
 			if (entry == list_of_books[i].getISBN())
 			{
@@ -153,7 +153,7 @@ void Teacher::searchBook() {
 		break;
 	case'5':
 		cin >> entry;
-		for (i = 0; i < (list_of_books.size() - 1); i++)
+		for (i = 0; i < (list_of_books.size() ); i++)
 		{
 			if (entry == list_of_books[i].getCategory())
 			{
@@ -166,7 +166,7 @@ void Teacher::searchBook() {
 	}
 }
 bool Teacher::return_book(string isbn) {
-	for (int i = 0; i < list_of_books.size() - 1; i++)
+	for (int i = 0; i < list_of_books.size() ; i++)
 	{
 		if (isbn == list_of_books[i].getISBN()) {
 			list_of_books[i].setReader("");
@@ -188,42 +188,48 @@ void Teacher::printCopies() {
 	}
 }
 
-/*
-
-
-}
-
-
-
-
-
-/*bool Teacher::request_book(string isbn, string b_title, string b_author, string b_category) {
-	
+bool Teacher::request_book() {
+	string isbn, title, b_title, b_author, b_category, id;
 	//asks user for ISBN
 	cout << "Please enter ISBN: " << endl;
 	cin >> isbn;
-	
+
 	//asks user for book title
 	cout << "Please enter book title: " << endl;
 	cin >> b_title;
-	
+
 	//asks user for book author
 	cout << "Please enter book author: " << endl;
 	cin >> b_author;
-	
+
 	//asks user for book category
 	cout << "Please enter category: " << endl;
 	cin >> b_category;
-	
+
 	//generates a random number for ID
-	//There is a way to set a range but idk how at the moment
-	int random = rand();
-	
+	cout << "Please enter ID: " << endl;
+	cin >> id;
+
 	//pushes the object into a list of objects through vectors 
 	//Putting the information into the vectors 
-	list_of_books.push_back(Book(isbn,b_title,b_author,b_category, random)); 
+	Book b = Book(isbn, b_title, b_author, b_category, id, "", 0, 0);
+	list_of_books.push_back(b);
 	return true;
 }
+bool Teacher::delete_copy(string Id_num) {
+	for (int j = 0; j < list_of_books.size(); j++)
+	{
+		if (Id_num == list_of_books[j].getId()) {
+			list_of_books.erase(list_of_books.begin() + j);
+			return 1;
+		}
+	}
+}
+
+
+
+
+/*
 
 bool Teacher::delete_copy(string Id_num){
 	
