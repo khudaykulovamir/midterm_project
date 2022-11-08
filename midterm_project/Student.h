@@ -2,7 +2,8 @@
 #include <string>
 #include "Book.h"
 #include <vector>
-
+#include <ctime>
+#include <cmath>
 using namespace std;
 class Student {
 private:
@@ -14,8 +15,8 @@ public:
 	void setUser(const string username);
 	string getPass();
 	void setPass(const string password);
-	void printCopies(); 
-	bool borrowBook(string isbn);
+	void printCopies(clock_t t);
+	bool borrowBook(string isbn, clock_t t);
 	bool returnBook(string isbn);
 //	ostream& operator<< (ostream& output,const Book& book);
 	//istream operator>> (istream& input, Book* book);
@@ -27,3 +28,4 @@ public:
 	bool checkForStudent(string u, string p);
 };
 extern vector <Student> students;
+extern vector <clock_t> student_clock;

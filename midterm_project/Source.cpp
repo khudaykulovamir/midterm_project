@@ -1,12 +1,12 @@
-using namespace std;
+
 #include "Book.h"
 #include "Student.h"
+#include "Teacher.h"
 #include <vector>
 #include <iostream>
 #include <string>
 #include <ctime>
-#include "Teacher.h"
-
+using namespace std;
 int main() {
 	Book B = Book();
 	B.readData("book.txt");
@@ -19,8 +19,8 @@ int main() {
 	Student s = Student();
 	s.readFile("student.txt");
 	Teacher t = Teacher();
-	/*time_req = clock();
-	cout << "Enter username: ";
+	time_req = clock();
+	/*cout << "Enter username: ";
 	cin >> username;
 	cout << "Enter password: ";
 	cin >> password;
@@ -68,7 +68,7 @@ int main() {
 						
 						cout << endl << "Enter isbn of book: ";
 						cin >> isbn;
-						 b=s1.borrowBook(isbn);
+						 b=s1.borrowBook(isbn, clock());
 						if (b)
 						{
 							cout << "Succesfully borrowed book!";
@@ -93,7 +93,7 @@ int main() {
 						/*renew book*/
 						break;
 					case '5':
-						s1.printCopies();
+						s1.printCopies(clock());
 						break;
 					
 					}
@@ -183,7 +183,7 @@ int main() {
 					else {
 						cout << "Failed to delete";
 					}
-					B.print();
+
 				}
 
 

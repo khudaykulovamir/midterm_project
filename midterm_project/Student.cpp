@@ -4,10 +4,13 @@
 #include <string>
 #include <vector>
 #include <fstream>
+#include <ctime>
+#include <cmath>
 #include "Teacher.h"
 vector <Book> Copy_list;
 vector <Student> students;
 vector <Teacher> teachers;
+vector <clock_t> student_clock;
 using namespace std;
 Student::Student() {
 	username = "";
@@ -32,13 +35,14 @@ string Student::getPass() {
 void Student::setPass(const string password) {
 	this->password = password;
 }
-void Student::printCopies() {
+void Student::printCopies(clock_t t) {
 	for (int i = 0; i < Copy_list.size(); i++)
 	{
 		cout << Copy_list[i].getISBN() << " " << Copy_list[i].getTitle() << " " << Copy_list[i].getAuthor() << " " << Copy_list[i].getCategory() << " " << Copy_list[i].getId() << " " << Copy_list[i].getReader() << endl;
+		cout << "Time borrowed: " << (float) ((t - student_clock[i])/CLOCKS_PER_SEC)/5<<" days"<<endl;
 	}
 }
-bool Student::borrowBook(string isbn) {
+bool Student::borrowBook(string isbn, clock_t t) {
 	for (int i = 0; i < list_of_books.size(); i++)
 	{
 		if (isbn == list_of_books[i].getISBN())
@@ -47,7 +51,7 @@ bool Student::borrowBook(string isbn) {
 			{
 				Copy_list.push_back(list_of_books[i]);
 				list_of_books[i].setReader(username);
-				
+				student_clock.push_back(t);
 				return 1;
 			}
 			return 0;
