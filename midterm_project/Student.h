@@ -23,9 +23,11 @@ public:
 	bool readFile(string fileName);
 	void UI();
 	void searchBook();
+	void sortBook(vector <Book> v1);
 	void printStudents();
 	void printListOfBooks();
 	bool checkForStudent(string u, string p);
+	void swap(Book *xp, Book *yp);
 };
 extern vector <Student> students;
 extern vector <clock_t> student_clock;
