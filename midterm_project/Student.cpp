@@ -157,8 +157,7 @@ void UI() {
 	cout << "-						Welcome to My Library						-" << endl;
 	cout << "--------------------------------------------------------------------" << endl;
 	cout << "\n";
-	cout << "Welcome back, Student";
-	cout << "\n";
+	cout << "Welcome back, Student"  << endl;
 	while (cmd != '0') {
 		cout << "Please choose:" << endl;
 		cout << "\t 1 -- Search Book" << endl;
@@ -171,7 +170,7 @@ void UI() {
 		case '0':
 			break;
 		case '1':
-			sortBook();
+			searchBook();
 			break;
 		case '2':
 			borrowBook();
