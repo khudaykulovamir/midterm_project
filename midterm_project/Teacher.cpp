@@ -97,7 +97,7 @@ bool Teacher::borrow_book(string isbn) {
     
 }
 
-bool Teacher::returnBook(string isbn) {
+bool Teacher::return_book(string isbn) {
 	for (int i = 0; i < list_of_books.size() - 1; i++)
 	{
 		if (isbn == list_of_books[i].getISBN()) {
@@ -112,6 +112,13 @@ bool Teacher::returnBook(string isbn) {
 		}
 	}
 	return 0;
+}
+
+void Teacher::printCopies() {
+	for (int i = 0; i < Copy_list.size(); i++)
+	{
+		cout << Copy_list[i].getISBN() << " " << Copy_list[i].getTitle() << " " << Copy_list[i].getAuthor() << " " << Copy_list[i].getCategory() << " " << Copy_list[i].getId() << " " << Copy_list[i].getReader() << endl;
+	}
 }
 
 void UI() {
