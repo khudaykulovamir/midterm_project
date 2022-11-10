@@ -11,6 +11,7 @@ vector <Book> Copy_list;
 vector <Student> students;
 vector <Teacher> teachers;
 vector <clock_t> student_clock;
+
 using namespace std;
 Student::Student() {
 	username = "";
@@ -18,10 +19,9 @@ Student::Student() {
 	Book copy_list[5];
 }
 
-Student::Student(string username, string password, vector <Book> copy_list) {
+Student::Student(string username, string password) {
 	this->username = username;
 	this->password = password;
-	Copy_list = copy_list;
 }
 string Student::getUser() {
 	return username;
@@ -39,7 +39,7 @@ void Student::printCopies(clock_t t) {
 	for (int i = 0; i < Copy_list.size(); i++)
 	{
 		cout << Copy_list[i].getISBN() << " " << Copy_list[i].getTitle() << " " << Copy_list[i].getAuthor() << " " << Copy_list[i].getCategory() << " " << Copy_list[i].getId() << " " << Copy_list[i].getReader() << endl;
-		cout << "Time borrowed: " << (float) ((t - student_clock[i])/CLOCKS_PER_SEC)/5<<" days"<<endl;
+		cout << "Time borrowed: " << (float)((t - student_clock[i]) / CLOCKS_PER_SEC) / 5 << " days" << endl;
 	}
 }
 bool Student::borrowBook(string isbn, clock_t t) {
@@ -64,7 +64,7 @@ bool Student::borrowBook(string isbn, clock_t t) {
 bool Student::checkForStudent(string u, string p) {
 	for (int i = 0; i < students.size(); i++)
 	{
-		if (students[i].getUser()==u&&students[i].getPass()==p)
+		if (students[i].getUser() == u && students[i].getPass() == p)
 		{
 			return 1;
 		}
@@ -82,7 +82,7 @@ bool Student::readFile(string in) {
 	}
 	int i;
 	string username, password;
-	
+
 	while (!bookFile.eof())
 	{
 		bookFile >> i;
@@ -99,13 +99,13 @@ bool Student::readFile(string in) {
 			Teacher t = Teacher(username, password);
 			teachers.push_back(t);
 		}
-		
+
 	}
 }
 void Student::printStudents() {
-	for (int i = 0; i < students.size() ; i++)
+	for (int i = 0; i < students.size(); i++)
 	{
-		cout << students[i].getUser() << " " << students[i].getPass()<<endl;
+		cout << students[i].getUser() << " " << students[i].getPass() << endl;
 	}
 }
 bool Student::returnBook(string isbn) {
@@ -124,12 +124,6 @@ bool Student::returnBook(string isbn) {
 	}
 	return 0;
 }
-void Student::printCopies() {
-	for (int i = 0; i < 5; i++) {
-		cout << "Title: " << Copy_list[i].getTitle() << " Author: " << Copy_list[i].getAuthor() << endl;
-
-	}
-}
 /*ostream& Student::operator<< (ostream& output, Book* book) {
 	string studentname = "NONE";
 	if (!book)
@@ -141,8 +135,6 @@ void Student::printCopies() {
 	output << "\tAuthor : \ t \ t" << book->getAuthor() << endl;
 	output << "\tCategory : \ t \ t" << book->getCategory() << endl;
 	output << "\tID : \ t \ t" << book->getId() << endl;//get # of copies
-
-
 }
 istream& Student::operator>> (istream& input, Book* book) {
 	string id;
@@ -151,155 +143,35 @@ istream& Student::operator>> (istream& input, Book* book) {
 	bool available;
 	input >> id >> isbn >> studentname >> available >> borrow >> expire;//double check
 }*/
-void UI() {
-	char cmd = 'q';
-	cout << "--------------------------------------------------------------------" << endl;
-	cout << "-						Welcome to My Library						-" << endl;
-	cout << "--------------------------------------------------------------------" << endl;
-	cout << "\n";
-	cout << "Welcome back, Student"  << endl;
-	while (cmd != '0') {
-		cout << "Please choose:" << endl;
-		cout << "\t 1 -- Search Book" << endl;
-		cout << "\t 2 -- Borrow Book" << endl;
-		cout << "\t 3 -- Return Book" << endl;
-		cout << "\t 4 -- Renew Book" << endl;	
-		cout << "\t 0 -- Log Out" << endl;
-		cin >> cmd;
-		switch (cmd) {
-		case '0':
-			break;
-		case '1':
-			searchBook();
-			break;
-		case '2':
-			string i;
-			cout << "Enter the ISBN of the book you would like to borrow: ";
-			cin >> i;
-			borrowBook(i, student_clock);
-			break;
-		case '3':
-			string i;
-			cout << "Enter the ISBN of the book you would like to return: ";
-			cin >> i;
-			returnBook(i);
-			break;
-		case '4':
-			/*renew book*/
-			break;
-		default:
-			cout << "Invalid Command. Try Again!" << endl;
-			continue;
+void sortTwoBooks(vector <Book>& unavailable, int temp_idx, int j) {//temp_idx before j
+	//compare titles when only 2
+	if (unavailable[temp_idx].getTitle().compare(unavailable[j].getTitle()) == 0) {
+		//compare author now
+		if (unavailable[temp_idx].getAuthor().compare(unavailable[j].getAuthor()) == 0) {
+			//compare isbn now
+			if (stoi(unavailable[temp_idx].getISBN()) == stoi(unavailable[j].getISBN())) {
+				//compare ID
+				if (stoi(unavailable[temp_idx].getId()) > stoi(unavailable[j].getId())) {
+					swap(unavailable[temp_idx], unavailable[j]);
+				}
+			}
+			else if (stoi(unavailable[temp_idx].getISBN()) > stoi(unavailable[j].getISBN())) {
+				swap(unavailable[temp_idx], unavailable[j]);
+			}
+		}
+		else if (unavailable[temp_idx].getAuthor().compare(unavailable[j].getAuthor()) > 0) {
+			swap(unavailable[temp_idx], unavailable[j]);
 		}
 	}
-	cout << "Logging Out..." << endl;
-	exit(1);
+	else if (unavailable[temp_idx].getTitle().compare(unavailable[j].getTitle()) > 0) {
+		swap(unavailable[temp_idx], unavailable[j]);
+	}
 }
-void searchBook() {
-	char cmd = 'q';
-	cout << "\n \n";
-	cout << "Search Book By:" << "\n" << "\n";
-	cout << "\t 1 -- ID" << endl;
-	cout << "\t 2 -- Title" << endl;
-	cout << "\t 3 -- Author" << endl;
-	cout << "\t 4 -- ISBN" << endl;
-	cout << "\t 5 -- Category" << endl;
-	cin >> cmd;
-	switch (cmd) {
-	case '1':
-		for ( int i = 1 ; i<=list_of_books.size() ; i++) {    
-    			for(int j = 1; j <= (list_of_books.size()-i-1); j++){ 
-       				if(stoi(list_of_books[i].getId) > stoi(list_of_books[j].getId))
-              				swap(list_of_books[i], list_of_books[j]);
-    			}
-		}
-		cout << "ID: ";
-		long int id;
-		cin >> id;
-		cout << "\n";
-		int lo = 0, hi = list_of_books.size() - 1;
-		int mid;
-		while (hi - lo > 1) {
-			int mid = (hi + lo) / 2;
-			if (stoi(list_of_books[mid].getId) < id) {
-				lo = mid + 1;
-			}
-			else if (stoi(list_of_books[mid].getId) == id) {
-				cout << list_of_books[mid].getISBN() << "\t" << list_of_books[mid].getTitle() << "\t" << list_of_books[mid].getAuthor() << list_of_books[mid].getCategory << endl;
-			}
-			else {
-				hi = mid;
-			}
-		}
-		if (stoi(list_of_books[lo].getId) == id) {
-			cout << list_of_books[lo].getISBN() << "\t" << list_of_books[lo].getTitle() << "\t" << list_of_books[lo].getAuthor() << list_of_books[lo].getCategory << endl;
-		}
-		else if (stoi(list_of_books[hi].getId) == id) {
-			cout << list_of_books[lo].getISBN() << "\t" << list_of_books[lo].getTitle() << "\t" << list_of_books[lo].getAuthor() << list_of_books[lo].getCategory << endl;
-		}
-		else {
-			cout << "Unknown ID. Try Again." << endl;
-		}
-		break;
-	case '2':
-		cout << "Title: ";
-		string t;
-		cin >> t;
-		for (int i = 0; i < list_of_books.size(); i++) {
-			if  (strcmp(t, list_of_books[i]) == 0)
-				cout << list_of_books[lo].getISBN() << "\t" << list_of_books[lo].getTitle() << "\t" << list_of_books[lo].getAuthor() << list_of_books[lo].getCategory << endl;\
-			else{
-				cout << "No results found by specified key" << endl;
-				sortBook(list_of_books);
-				break;
-			}
-		}
-		break;
-	case '3':
-		cout << "Author: ";
-		string a;
-		cin >> a;
-		for (int i = 0; i < list_of_books.size(); i++) {
-			if (strcmp(a, list_of_books[i]) == 0)
-				cout << list_of_books[lo].getISBN() << "\t" << list_of_books[lo].getTitle() << "\t" << list_of_books[lo].getAuthor() << list_of_books[lo].getCategory << endl;
-			else{
-				cout << "No results found by specified key" << endl;
-				sortBook(list_of_books);
-				break;
-			}
-		}
-		break;
-	case'4':
-		cout << "ISBN: ";
-		string j;
-		cin >> j;
-		for (int i = 0; i < list_of_books.size(); i++) {
-			if (strcmp(j, list_of_books[i]) == 0)
-				cout << list_of_books[lo].getISBN() << "\t" << list_of_books[lo].getTitle() << "\t" << list_of_books[lo].getAuthor() << list_of_books[lo].getCategory << endl;
-			else{
-				cout << "No results found by specified key" << endl;
-				sortBook(list_of_books);
-				break;
-			}
-		}
-		break;
-	case'5':
-		cout << "Category: ";
-		string c;
-		cin >> c;
-		for (int i = 0; i < list_of_books.size(); i++) {
-			if (strcmp(c, list_of_books[i]) == 0)
-				cout << list_of_books[lo].getISBN() << "\t" << list_of_books[lo].getTitle() << "\t" << list_of_books[lo].getAuthor() << list_of_books[lo].getCategory << endl;
-			else{
-				cout << "No results found by specified key" << endl;
-				sortBook(list_of_books);
-				break;
-			}
-		}
-		break;
-	default:
-		cout << "Invalid option. Try Again." << endl;
-	}
+void swap(Book* xp, Book* yp)
+{
+	Book temp = *xp;
+	*xp = *yp;
+	*yp = temp;
 }
 void sortBook(vector <Book> v1) {//make avail and unavail parameters 
 	vector <Book> available;
@@ -320,71 +192,154 @@ void sortBook(vector <Book> v1) {//make avail and unavail parameters
 				minimum = j;
 			if (minimum != i)
 				swap(unavailable[minimum], unavailable[i]);
-		}	
+		}
 	}
 	int first_idx, last_idx, x;
-	for (int j = 0; j < unavailable.size()-1; j++) {
-		if (available[j].getexpDate() == available[j+1].getexpDate()) {
+	for (int j = 0; j < unavailable.size() - 1; j++) {
+		if (available[j].getexpDate() == available[j + 1].getexpDate()) {
 			first_idx = j;
-			x = j+1;
-			while (available[x].getexpDate == available[x+1].getExpDate) {
+			x = j + 1;
+			while (available[x].getexpDate() == available[x + 1].getexpDate()) {
 				x++;
 				last_idx = x;
 			}
 		}
-		if ((last_idx-first_idx)==1)
-			sortTwoBooks(unavailable, first_idx, Last_idx);
+		if ((last_idx - first_idx) == 1)
+			sortTwoBooks(unavailable, first_idx, last_idx);
 		else {
 			for (int i = first_idx; i < last_idx; i++) {
-				for (int k = i; k < last_idx-1; k++) {
+				for (int k = i; k < last_idx - 1; k++) {
 					sortTwoBooks(unavailable, k, k + 1);
 				}
 			}
 		}
 	}
-	for (int i = 0; i < available.size()-1; i++){
-		for (int j = 0; j < available.size()-1; j++);{
-			sortTwoBooks(available,j,j+1);
+	for (int i = 0; i < available.size() - 1; i++) {
+		for (int j = 0; j < available.size() - 1; j++) {
+			sortTwoBooks(available, j, j + 1);
 		}
 	}
 	//print
-	for (int i = 0; i < unavailable.size()-1; i++){
-		cout << unavailable[i].getISBN() << "\t" << unavailable[i].getTitle() << "\t" << unavailable[i].getAuthor() << unavailable[i].getCategory << endl;
+	for (int i = 0; i < unavailable.size() - 1; i++) {
+		cout << unavailable[i].getISBN() << "\t" << unavailable[i].getTitle() << "\t" << unavailable[i].getAuthor() << unavailable[i].getCategory() << endl;
 	}
-	for (int j = 0; j < unavailable.size()-1; j++){
-		cout << available[j].getISBN() << "\t" << available[j].getTitle() << "\t" << available[j].getAuthor() << available[j].getCategory << endl;
+	for (int j = 0; j < unavailable.size() - 1; j++) {
+		cout << available[j].getISBN() << "\t" << available[j].getTitle() << "\t" << available[j].getAuthor() << available[j].getCategory() << endl;
 	}
 }
-void sortTwoBooks(vector <Book>& unavailable, int temp_idx, int j) {//temp_idx before j
-	//compare titles when only 2
-	if (unavailable[temp_idx].getTitle().compare(unavailable[j].getTitle()) == 0) {
-		//compare author now
-		if (unavailable[temp_idx].getAuthor().compare(unavailable[j].getAuthor()) == 0) {
-			//compare isbn now
-			if (stoi(unavailable[temp_idx].getISBN()) == stoi(unavailable[j].getISBN())) {
-				//compare ID
-				if (stoi(unavailable[temp_idx].getId()) > stoi(unavailable[j].getId())) {
-					swap(unavailable[temp_idx], unavailable[j]);
-				}
-			}
-			else if (stoi(unavailable[temp_idx].getISBN()) > stoi(unavailable[j].getISBN())) {
-				swap(unavailable[temp_idx], unavailable[j]);
+
+void searchBook() {
+	char cmd = 'q';
+	cout << "\n \n";
+	cout << "Search Book By:" << "\n" << "\n";
+	cout << "\t 1 -- ID" << endl;
+	cout << "\t 2 -- Title" << endl;
+	cout << "\t 3 -- Author" << endl;
+	cout << "\t 4 -- ISBN" << endl;
+	cout << "\t 5 -- Category" << endl;
+	cin >> cmd;
+	string temp, temp1;
+	string t, a, j, c;
+	switch (cmd) {
+	case '1':
+	{
+		for (int i = 1; i <= list_of_books.size(); i++) {
+			for (int j = 1; j <= (list_of_books.size() - i - 1); j++) {
+				temp = list_of_books[i].getId();
+				temp1 = list_of_books[i].getId();
+				if (stoi(temp) > stoi(temp1))
+					swap(list_of_books[i], list_of_books[j]);
 			}
 		}
-		else if (unavailable[temp_idx].getAuthor().compare(unavailable[j].getAuthor) > 0) {
-			swap(unavailable[temp_idx], unavailable[j]);
+		cout << "ID: ";
+		long int id;
+		cin >> id;
+		cout << "\n";
+		int lo = 0;
+		int hi = list_of_books.size() - 1;
+		int mid;
+		while (hi - lo > 1) {
+			int mid = (hi + lo) / 2;
+			temp = list_of_books[mid].getId();
+			if (stoi(temp) < id) {
+				lo = mid + 1;
+			}
+			else if (stoi(temp) == id) {
+				cout << list_of_books[mid].getISBN() << "\t" << list_of_books[mid].getTitle() << "\t" << list_of_books[mid].getAuthor() << "\t" << list_of_books[mid].getCategory() << endl;
+			}
+			else {
+				hi = mid;
+			}
 		}
+		temp1 = list_of_books[lo].getId();
+		if (stoi(temp1) == id) {
+			cout << list_of_books[lo].getISBN() << "\t" << list_of_books[lo].getTitle() << "\t" << list_of_books[lo].getAuthor() << list_of_books[lo].getCategory() << endl;
+		}
+		else if (stoi(temp1) == id) {
+			cout << list_of_books[lo].getISBN() << "\t" << list_of_books[lo].getTitle() << "\t" << list_of_books[lo].getAuthor() << list_of_books[lo].getCategory() << endl;
+		}
+		else {
+			cout << "Unknown ID. Try Again." << endl;
+		}
+		break;
 	}
-	else if (unavailable[temp_idx].getTitle().compare(unavailable[j].getTitle) > 0) {
-		swap(unavailable[temp_idx], unavailable[j]);
+	case '2':
+		cout << "Title: ";
+		cin >> t;
+		for (int i = 0; i < list_of_books.size(); i++) {
+			if (t.compare(list_of_books[i].getTitle()) == 0)
+				cout << list_of_books[i].getISBN() << "\t" << list_of_books[i].getTitle() << "\t" << list_of_books[i].getAuthor() << list_of_books[i].getCategory() << endl; \
+			else {
+				cout << "No results found by specified key" << endl;
+				sortBook(list_of_books);
+				break;
+			}
+		}
+		break;
+	case '3':
+		cout << "Author: ";
+		cin >> a;
+		for (int i = 0; i < list_of_books.size(); i++) {
+			if (a.compare(list_of_books[i].getAuthor()) == 0)
+				cout << list_of_books[i].getISBN() << "\t" << list_of_books[i].getTitle() << "\t" << list_of_books[i].getAuthor() << list_of_books[i].getCategory() << endl;
+			else {
+				cout << "No results found by specified key" << endl;
+				sortBook(list_of_books);
+				break;
+			}
+		}
+		break;
+	case'4':
+		cout << "ISBN: ";
+		cin >> j;
+		for (int i = 0; i < list_of_books.size(); i++) {
+			if (j.compare(list_of_books[i].getISBN()) == 0)
+				cout << list_of_books[i].getISBN() << "\t" << list_of_books[i].getTitle() << "\t" << list_of_books[i].getAuthor() << list_of_books[i].getCategory() << endl;
+			else {
+				cout << "No results found by specified key" << endl;
+				sortBook(list_of_books);
+				break;
+			}
+		}
+		break;
+	case'5':
+		cout << "Category: ";
+		cin >> c;
+		for (int i = 0; i < list_of_books.size(); i++) {
+			if (c.compare(list_of_books[i].getCategory()) == 0)
+				cout << list_of_books[i].getISBN() << "\t" << list_of_books[i].getTitle() << "\t" << list_of_books[i].getAuthor() << list_of_books[i].getCategory() << endl;
+			else {
+				cout << "No results found by specified key" << endl;
+				sortBook(list_of_books);
+				break;
+			}
+		}
+		break;
+	default:
+		cout << "Invalid option. Try Again." << endl;
 	}
 }
-void swap(Book *xp, Book *yp)
-{
-	Book temp = *xp;
-	*xp = *yp;
-	*yp = temp;
-}
+
 
 /*other search func / doesnt prioritize
 void Student::searchBook() {
@@ -409,7 +364,6 @@ void Student::searchBook() {
 				{
 					cout << "Book found!"<<endl;
 					cout << list_of_books[i].getISBN() << " " << list_of_books[i].getTitle() << " " << list_of_books[i].getAuthor() << " " << list_of_books[i].getCategory() << " " << list_of_books[i].getId()  << endl;
-
 				}
 			}
 			break;
@@ -421,7 +375,6 @@ void Student::searchBook() {
 				{
 					cout << "Book found!"<<endl;
 					cout << list_of_books[i].getISBN() << " " << list_of_books[i].getTitle() << " " << list_of_books[i].getAuthor() << " " << list_of_books[i].getCategory() << " " << list_of_books[i].getId() << endl;
-
 				}
 			}
 			break;
@@ -433,7 +386,6 @@ void Student::searchBook() {
 				{
 					cout << "Book found!"<<endl;
 					cout << list_of_books[i].getISBN() << " " << list_of_books[i].getTitle() << " " << list_of_books[i].getAuthor() << " " << list_of_books[i].getCategory() << " " << list_of_books[i].getId() << endl;
-
 				}
 			}
 			break;
@@ -445,7 +397,6 @@ void Student::searchBook() {
 				{
 					cout << "Book found!"<<endl;
 					cout << list_of_books[i].getISBN() << " " << list_of_books[i].getTitle() << " " << list_of_books[i].getAuthor() << " " << list_of_books[i].getCategory() << " " << list_of_books[i].getId() << endl;
-
 				}
 			}
 			break;
@@ -457,7 +408,6 @@ void Student::searchBook() {
 				{
 					cout << "Book found!"<<endl;
 					cout << list_of_books[i].getISBN() << " " << list_of_books[i].getTitle() << " " << list_of_books[i].getAuthor() << " " << list_of_books[i].getCategory() << " " << list_of_books[i].getId() << endl;
-
 				}
 			}
 			break;
